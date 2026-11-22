@@ -94,14 +94,15 @@ export function Dashboard() {
  <TickerBar assets={assets} />
 
  <main className="mx-auto max-w-[1200px] space-y-12 px-4 py-8">
- <section className="bg-hero-gradient relative overflow-hidden border border-border p-6 sm:p-8" data-aos="fade-up">
+ <section className="bg-hero-gradient relative overflow-hidden border border-border p-6 sm:p-8" data-aos="fade-right" data-aos-duration="700">
+ <div className="absolute top-0 left-0 h-1 w-24 bg-brand" aria-hidden="true" />
  <div className="grid items-center gap-8 lg:grid-cols-2">
  <div className="space-y-4">
- <p className="inline-flex bg-brand-soft px-3 py-1 text-xs font-medium text-brand">
+ <p className="inline-flex border border-brand/30 bg-brand-soft px-3 py-1 text-xs font-medium tracking-wide text-brand uppercase">
  {t("heroBadge")}
  </p>
  <div>
- <p className="font-mono text-sm tracking-[0.2em] text-brand">MATRIX</p>
+ <p className="font-mono text-sm tracking-[0.25em] text-brand">MATRIX</p>
  <h1 className="mt-2 max-w-xl text-3xl font-semibold tracking-tight text-text sm:text-5xl">
  {t("heroTitle")}
  </h1>
@@ -109,17 +110,17 @@ export function Dashboard() {
  <p className="max-w-xl text-sm leading-7 text-muted sm:text-base">
  {t("heroDesc")}
  </p>
- <p className="text-xs text-muted">{t("tagline")}</p>
+ <p className="text-xs tracking-wide text-muted uppercase">{t("tagline")}</p>
  <div className="flex flex-wrap gap-3 pt-2">
- <a href="#market" className="surface-transition bg-brand px-4 py-2.5 text-sm font-medium text-white hover:opacity-90 hover:-translate-y-0.5">
+ <a href="#market" className="surface-transition bg-brand px-5 py-2.5 text-sm font-medium text-white hover:opacity-90 hover:-translate-y-0.5">
  {t("heroCta")}
  </a>
- <a href="#berita" className="surface-transition border border-border bg-panel px-4 py-2.5 text-sm font-medium text-text hover:bg-panel-elev hover:-translate-y-0.5">
+ <a href="#berita" className="surface-transition border border-border bg-panel px-5 py-2.5 text-sm font-medium text-text hover:bg-panel-elev hover:border-brand/40 hover:-translate-y-0.5">
  {t("heroCta2")}
  </a>
  </div>
  </div>
- <div className="relative h-[240px] overflow-hidden border border-border sm:h-[320px]">
+ <div className="relative h-[240px] overflow-hidden border border-border sm:h-[320px]" data-aos="fade-left" data-aos-delay="150">
  <Image
  src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80"
  alt="Financial market charts"
@@ -128,21 +129,22 @@ export function Dashboard() {
  sizes="(max-width: 1024px) 100vw, 50vw"
  priority
  />
- <div className="absolute inset-0 bg-gradient-to-t from-bg/60 to-transparent" />
+ <div className="absolute inset-0 bg-gradient-to-t from-bg/70 via-transparent to-transparent" />
+ <div className="absolute bottom-0 left-0 h-1 w-full bg-brand/60" aria-hidden="true" />
  </div>
  </div>
  </section>
 
- <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-aos="fade-up">
- {stats.map((s) => (
- <div key={s.label} className="surface-transition border border-border bg-panel p-4 hover:-translate-y-1 hover:border-brand/40">
- <div className="text-xs text-muted">{s.label}</div>
+ <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+ {stats.map((s, i) => (
+ <div key={s.label} data-aos="fade-up" data-aos-delay={i * 80} className="surface-transition border border-border border-t-2 border-t-brand/50 bg-panel p-4 hover:-translate-y-1 hover:border-brand/40">
+ <div className="text-xs tracking-wide text-muted uppercase">{s.label}</div>
  <div className="mt-2 font-num text-2xl font-semibold text-text">{s.value}</div>
  </div>
  ))}
  </section>
 
- <section id="market" className="space-y-4 scroll-mt-24" data-aos="fade-up">
+ <section id="market" className="space-y-4 scroll-mt-24" data-aos="fade-left" data-aos-duration="650">
  <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
  <div>
  <h2 className="text-2xl font-semibold text-text">{t("marketTitle")}</h2>
@@ -199,14 +201,14 @@ export function Dashboard() {
  )}
  </section>
 
- <section id="insights" className="scroll-mt-24 space-y-4" data-aos="fade-up">
- <div>
+ <section id="insights" className="scroll-mt-24 space-y-4">
+ <div data-aos="fade-right">
  <h2 className="text-2xl font-semibold text-text">{t("insightsTitle")}</h2>
  <p className="text-sm text-muted">{t("insightsDesc")}</p>
  </div>
  <div className="grid gap-4 md:grid-cols-3">
- {insights.map((item) => (
- <div key={item.title} className="surface-transition border border-border bg-panel p-5 hover:-translate-y-1 hover:border-brand/40">
+ {insights.map((item, i) => (
+ <div key={item.title} data-aos="fade-up" data-aos-delay={i * 100} className="surface-transition border border-border bg-panel p-5 hover:-translate-y-1 hover:border-brand/40">
  <div className="mb-3 h-1 w-10 bg-brand" />
  <h3 className="text-sm font-semibold text-text">{item.title}</h3>
  <p className="mt-2 text-sm leading-6 text-muted">{item.desc}</p>
@@ -215,12 +217,12 @@ export function Dashboard() {
  </div>
  </section>
 
- <section id="berita" className="grid gap-4 lg:grid-cols-3 scroll-mt-24" data-aos="fade-up">
+ <section id="berita" className="grid gap-4 lg:grid-cols-3 scroll-mt-24">
  <div className="lg:col-span-2">
  <NewsFeed items={NEWS} />
  </div>
  <div className="space-y-4">
- <div className="overflow-hidden border border-border bg-panel card-glow" data-aos="fade-up">
+ <div className="overflow-hidden border border-border bg-panel card-glow" data-aos="zoom-in" data-aos-delay="100">
  <div className="relative h-36">
  <Image
  src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=900&q=80"
@@ -250,7 +252,7 @@ export function Dashboard() {
  </div>
  </div>
 
- <div className="border border-border bg-panel p-4 card-glow" data-aos="fade-up">
+ <div className="border border-border bg-panel p-4 card-glow" data-aos="fade-left" data-aos-delay="150">
  <h3 className="text-sm font-semibold text-text">{t("learnTitle")}</h3>
  <p className="mt-1 text-xs text-muted">{t("learnDesc")}</p>
  <div className="mt-4 space-y-3">
@@ -265,18 +267,18 @@ export function Dashboard() {
  </div>
         </section>
 
-        <section id="faq" className="scroll-mt-24 space-y-4" data-aos="fade-up">
-          <div>
-            <h2 className="text-2xl font-semibold text-text">{t("faqTitle")}</h2>
-            <p className="text-sm text-muted">{t("faqDesc")}</p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              { q: t("faq1Q"), a: t("faq1A") },
-              { q: t("faq2Q"), a: t("faq2A") },
-              { q: t("faq3Q"), a: t("faq3A") },
-            ].map((f) => (
-              <details key={f.q} className="group surface-transition border border-border bg-panel p-5 hover:-translate-y-1 hover:border-brand/40">
+        <section id="faq" className="scroll-mt-24 space-y-4">
+          <div data-aos="fade-right">
+ <h2 className="text-2xl font-semibold text-text">{t("faqTitle")}</h2>
+ <p className="text-sm text-muted">{t("faqDesc")}</p>
+ </div>
+ <div className="grid gap-4 md:grid-cols-3">
+ {[
+ { q: t("faq1Q"), a: t("faq1A") },
+ { q: t("faq2Q"), a: t("faq2A") },
+ { q: t("faq3Q"), a: t("faq3A") },
+ ].map((f, i) => (
+ <details key={f.q} data-aos="fade-up" data-aos-delay={i * 100} className="group surface-transition border border-border bg-panel p-5 hover:-translate-y-1 hover:border-brand/40">
                 <summary className="cursor-pointer list-none text-sm font-semibold text-text flex items-center justify-between gap-3">
                   <span>{f.q}</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 transition-transform duration-200 group-open:rotate-180"><path d="m6 9 6 6 6-6"/></svg>

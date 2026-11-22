@@ -28,7 +28,7 @@ export function MarketCard({ asset }: { asset: Asset }) {
  const up = asset.changePercent >= 0;
  return (
  <article
- data-aos="fade-up"
+ data-aos="zoom-in"
  className="surface-transition card-glow group border border-border bg-panel p-5 hover:-translate-y-1 hover:border-brand/40 hover:shadow-lg"
  >
  <div className="flex items-start justify-between gap-3">

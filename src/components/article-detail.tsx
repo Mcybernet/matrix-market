@@ -30,7 +30,7 @@ export function ArticleDetail({ item }: { item: NewsItem }) {
  </header>
 
  <main className="mx-auto max-w-[900px] px-4 py-10">
- <article data-aos="fade-up" className="border border-border bg-panel card-glow overflow-hidden">
+ <article data-aos="fade-right" data-aos-duration="650" className="border border-border bg-panel card-glow overflow-hidden">
  <div className="relative h-[240px] sm:h-[360px] w-full border-b border-border">
  <Image src={item.image} alt={item.title} fill className="object-cover transition duration-500 hover:scale-[1.02]" sizes="(max-width: 900px) 100vw, 900px" priority />
  <div className="absolute inset-0 bg-gradient-to-t from-bg/40 to-transparent" />

@@ -2,38 +2,38 @@
 
 :root,
 [data-theme="dark"] {
- --brand: #4f7cff;
- --brand-soft: rgba(79, 124, 255, 0.14);
- --bg: #0b1220;
- --bg-2: #111a2e;
- --panel: #141d31;
- --panel-elev: #1a2540;
- --border: #24314d;
- --text: #e6edf7;
- --text-muted: #94a3b8;
+ --brand: #00c853;
+ --brand-soft: rgba(0, 200, 83, 0.12);
+ --bg: #090d0b;
+ --bg-2: #0f1712;
+ --panel: #121a15;
+ --panel-elev: #18221c;
+ --border: #24332a;
+ --text: #e5efe8;
+ --text-muted: #8ba396;
  --up: #22c55e;
  --down: #ef4444;
  --warn: #f59e0b;
- --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+ --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
  --background: var(--bg);
  --foreground: var(--text);
  color-scheme: dark;
 }
 
 [data-theme="light"] {
- --brand: #2563eb;
- --brand-soft: rgba(37, 99, 235, 0.1);
- --bg: #f5f7fb;
- --bg-2: #eaf0ff;
+ --brand: #059669;
+ --brand-soft: rgba(5, 150, 105, 0.1);
+ --bg: #f4f7f5;
+ --bg-2: #e8f2ec;
  --panel: #ffffff;
- --panel-elev: #f8fafc;
- --border: #dbe4f0;
- --text: #0f172a;
- --text-muted: #64748b;
+ --panel-elev: #f7faf8;
+ --border: #d5e3da;
+ --text: #111a14;
+ --text-muted: #5f7468;
  --up: #16a34a;
  --down: #dc2626;
  --warn: #d97706;
- --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+ --shadow: 0 8px 24px rgba(17, 26, 20, 0.08);
  --background: var(--bg);
  --foreground: var(--text);
  color-scheme: light;
@@ -98,13 +98,15 @@ button:hover, [role="button"]:hover {
 
 .bg-hero-gradient {
  background:
- radial-gradient(ellipse 80% 50% at 50% -10%, rgba(79, 124, 255, 0.22), transparent 60%),
+ radial-gradient(ellipse 70% 45% at 20% 0%, rgba(0, 200, 83, 0.16), transparent 55%),
+ radial-gradient(ellipse 50% 40% at 80% 100%, rgba(0, 200, 83, 0.08), transparent 55%),
  linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
 }
 
 [data-theme="light"] .bg-hero-gradient {
  background:
- radial-gradient(ellipse 80% 50% at 50% -10%, rgba(37, 99, 235, 0.12), transparent 60%),
+ radial-gradient(ellipse 70% 45% at 20% 0%, rgba(5, 150, 105, 0.1), transparent 55%),
+ radial-gradient(ellipse 50% 40% at 80% 100%, rgba(5, 150, 105, 0.06), transparent 55%),
  linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
 }
 
@@ -121,8 +123,8 @@ button:hover, [role="button"]:hover {
  height: 8px;
 }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #64748b; }
+::-webkit-scrollbar-thumb { background: #355243; }
+::-webkit-scrollbar-thumb:hover { background: #4a7058; }
 
 @keyframes ticker {
  0% { transform: translateX(0); }

@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props) {
  const item = NEWS.find((n) => n.id === id);
  if (!item) return { title: "Artikel tidak ditemukan" };
  return {
- title: `${item.title} — MATRIX`,
+ title: `${item.title} - MATRIX`,
  description: item.summary,
  };
 }

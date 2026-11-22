@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
- title: "MATRIX — Market Analysis, Trading & Research Intelligence Exchange",
+ title: "MATRIX - Market Analysis, Trading & Research Intelligence Exchange",
  description:
  "Pusat informasi, analisis, trading, dan riset pasar keuangan. Pantau emas, komoditas, forex, indeks, dan crypto.",
 };
