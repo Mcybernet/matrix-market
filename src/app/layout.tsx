@@ -30,7 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
  suppressHydrationWarning
  className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
  >
- <body className="min-h-full bg-bg text-text pb-16 md:pb-0">
+ <body className="min-h-full bg-bg text-text pb-16 md:pb-0 overflow-x-hidden">
  <script
  dangerouslySetInnerHTML={{
  __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();`,

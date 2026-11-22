@@ -69,13 +69,6 @@ export function Dashboard() {
  });
  }, [assets, query, category]);
 
- const stats = [
- { label: t("statsAssets"), value: assets.length ? String(assets.length) : "9" },
- { label: t("statsCategories"), value: "4" },
- { label: t("statsSources"), value: "2" },
- { label: t("statsRefresh"), value: t("minutes") },
- ];
-
  const insights = [
  { title: t("insight1Title"), desc: t("insight1Desc") },
  { title: t("insight2Title"), desc: t("insight2Desc") },
@@ -133,15 +126,6 @@ export function Dashboard() {
  <div className="absolute bottom-0 left-0 h-1 w-full bg-brand/60" aria-hidden="true" />
  </div>
  </div>
- </section>
-
- <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
- {stats.map((s, i) => (
- <div key={s.label} data-aos="fade-up" data-aos-delay={i * 80} className="surface-transition border border-border border-t-2 border-t-brand/50 bg-panel p-4 hover:-translate-y-1 hover:border-brand/40">
- <div className="text-xs tracking-wide text-muted uppercase">{s.label}</div>
- <div className="mt-2 font-num text-2xl font-semibold text-text">{s.value}</div>
- </div>
- ))}
  </section>
 
  <section id="market" className="space-y-4 scroll-mt-24" data-aos="fade-left" data-aos-duration="650">
