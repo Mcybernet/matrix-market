@@ -21,9 +21,10 @@ export function Header({
 }) {
  const { t, locale, setLocale } = useI18n();
  const navItems = [
- { href: "#market", label: t("navMarket") },
- { href: "#berita", label: t("navNews") },
- { href: "#insights", label: t("navInsights") },
+  { href: "#market", label: t("navMarket") },
+  { href: "#berita", label: t("navNews") },
+  { href: "#calendar", label: t("navCalendar") },
+  { href: "#insights", label: t("navInsights") },
  ];
 
  return (
