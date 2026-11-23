@@ -32,15 +32,36 @@ function guessCategory(text: string): NewsItem["category"] {
  return "Market";
 }
 
-function imageForCategory(cat: NewsItem["category"]) {
- const map: Record<string, string> = {
-  Komoditas: "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=900&q=80",
-  Forex: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&fit=crop&w=900&q=80",
-  Indeks: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=900&q=80",
-  Crypto: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&w=900&q=80",
-  Market: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80",
+function imageForCategory(cat: NewsItem["category"], i: number) {
+ const map: Record<string, string[]> = {
+  Komoditas: [
+   "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=900&q=80",
+   "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=900&q=80",
+   "https://images.unsplash.com/photo-1550565118-3a14e8d0386f?auto=format&fit=crop&w=900&q=80",
+  ],
+  Forex: [
+   "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&fit=crop&w=900&q=80",
+   "https://images.unsplash.com/photo-1621981386829-9b458a2cddde?auto=format&fit=crop&w=900&q=80",
+   "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&w=900&q=80",
+  ],
+  Indeks: [
+   "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=900&q=80",
+   "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=900&q=80",
+   "https://images.unsplash.com/photo-1535320903710-d993d3d77d29?auto=format&fit=crop&w=900&q=80",
+  ],
+  Crypto: [
+   "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&w=900&q=80",
+   "https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=900&q=80",
+   "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=900&q=80",
+  ],
+  Market: [
+   "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80",
+   "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80",
+   "https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=900&q=80",
+  ],
  };
- return map[cat] || map.Market;
+ const arr = map[cat] || map.Market;
+ return arr[i % arr.length];
 }
 
 function relativeTime(dateStr: string) {
@@ -81,7 +102,7 @@ export async function GET() {
     category,
     summary,
     content: `${title}\n\n${summary}\n\nThis headline was fetched from a public RSS feed for informational purposes. Open the source link for full context.`,
-    image: imageForCategory(category),
+    image: imageForCategory(category, i),
     url: link || "#",
    };
   }).filter((n) => n.title);

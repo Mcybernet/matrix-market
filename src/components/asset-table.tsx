@@ -56,7 +56,7 @@ export function AssetTable({
  </div>
  </div>
  <div className="overflow-x-auto">
- <table className="w-full min-w-[640px] text-sm">
+ <table className="w-full min-w-[640px] text-xs">
  <thead className="text-[11px] uppercase tracking-wide text-muted">
  <tr className="border-b border-border">
  <th className="px-4 py-2 text-left font-medium">Aset</th>
@@ -114,7 +114,7 @@ export function AssetTable({
  })}
  {assets.length === 0 && (
  <tr>
- <td colSpan={6} className="px-4 py-8 text-center text-sm text-muted">
+ <td colSpan={6} className="px-4 py-8 text-center text-xs text-muted">
  Tidak ada aset yang cocok.
  </td>
  </tr>

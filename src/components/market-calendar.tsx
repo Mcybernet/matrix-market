@@ -46,25 +46,25 @@ export function MarketCalendar() {
     </div>
    </div>
    <div className="border border-border bg-panel overflow-x-auto">
-    <table className="w-full min-w-[640px] text-sm">
-     <thead className="bg-panel-elev text-muted text-xs uppercase tracking-wide">
+    <table className="w-full min-w-[640px] text-xs">
+     <thead className="bg-panel-elev text-muted text-[11px] uppercase tracking-wide">
       <tr>
-       <th className="text-left px-4 py-3 font-medium">Date</th>
-       <th className="text-left px-4 py-3 font-medium">Time (UTC)</th>
-       <th className="text-left px-4 py-3 font-medium">Country</th>
-       <th className="text-left px-4 py-3 font-medium">Event</th>
-       <th className="text-left px-4 py-3 font-medium">Impact</th>
+       <th className="text-left px-3 py-2.5 font-medium">Date</th>
+       <th className="text-left px-3 py-2.5 font-medium">Time (UTC)</th>
+       <th className="text-left px-3 py-2.5 font-medium">Country</th>
+       <th className="text-left px-3 py-2.5 font-medium">Event</th>
+       <th className="text-left px-3 py-2.5 font-medium">Impact</th>
       </tr>
      </thead>
      <tbody>
       {items.map((e) => (
        <tr key={e.id} className="border-t border-border hover:bg-panel-elev/50 transition">
-        <td className="px-4 py-3 font-num text-text">{e.date}</td>
-        <td className="px-4 py-3 font-num text-muted">{e.time}</td>
-        <td className="px-4 py-3 text-text">{e.country}</td>
-        <td className="px-4 py-3 text-text">{e.event}</td>
-        <td className="px-4 py-3">
-         <span className={`inline-flex px-2 py-0.5 text-[11px] border ${IMPACT_STYLE[e.impact]}`}>{e.impact}</span>
+        <td className="px-3 py-2.5 font-num text-text">{e.date}</td>
+        <td className="px-3 py-2.5 font-num text-muted">{e.time}</td>
+        <td className="px-3 py-2.5 text-text">{e.country}</td>
+        <td className="px-3 py-2.5 text-text">{e.event}</td>
+        <td className="px-3 py-2.5">
+         <span className={`inline-flex px-2 py-0.5 text-[10px] border ${IMPACT_STYLE[e.impact]}`}>{e.impact}</span>
         </td>
        </tr>
       ))}
