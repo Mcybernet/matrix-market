@@ -29,14 +29,14 @@ export function NewsFeed({ items }: { items: NewsItem[] }) {
  const open = openId === item.id;
  return (
  <article key={item.id} className="px-4 py-4 surface-transition hover:bg-panel-elev/40">
- <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
- <div className="relative h-40 w-full sm:h-24 sm:w-36 shrink-0 overflow-hidden border border-border bg-bg">
+ <div className="flex gap-3 sm:gap-4">
+ <div className="relative h-20 w-28 sm:h-24 sm:w-36 shrink-0 overflow-hidden border border-border bg-bg">
  <Image
  src={item.image}
  alt={item.title}
  fill
  className="object-cover transition duration-300 hover:scale-105"
- sizes="(max-width: 640px) 100vw, 144px"
+ sizes="(max-width: 640px) 112px, 144px"
  />
  </div>
  <div className="min-w-0 flex-1">
