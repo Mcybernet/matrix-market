@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import type { NewsItem } from "@/lib/types";
@@ -43,48 +42,37 @@ export function NewsFeed({ items, meta }: { items: NewsItem[]; meta?: { source?:
      const open = openId === item.id;
      return (
       <article key={item.id} className="border border-border bg-panel surface-transition hover:bg-panel-elev/40 sm:border-0 sm:px-4 sm:py-4">
-       <div className="flex flex-col sm:flex-row sm:gap-4">
-        <div className="relative h-28 w-full sm:h-24 sm:w-36 shrink-0 overflow-hidden border-b border-border sm:border sm:border-border bg-bg">
-         <Image
-          src={item.image}
-          alt={item.title}
-          fill
-          className="object-cover transition duration-300 hover:scale-105"
-          sizes="(max-width: 640px) 50vw, 144px"
-         />
+       <div className="min-w-0 flex-1 p-3 sm:p-0">
+        <div className="mb-2 flex flex-wrap items-center gap-1.5 text-[10px] sm:text-[11px] text-muted">
+         <span className="bg-brand-soft px-1.5 py-0.5 text-[10px] font-medium text-brand">
+          {item.category}
+         </span>
+         <span className="truncate">{item.source}</span>
+         <span className="hidden sm:inline">•</span>
+         <span className="hidden sm:inline">{item.time}</span>
         </div>
-        <div className="min-w-0 flex-1 p-2.5 sm:p-0">
-         <div className="mb-2 flex flex-wrap items-center gap-1.5 text-[10px] sm:text-[11px] text-muted">
-          <span className="bg-brand-soft px-1.5 py-0.5 text-[10px] font-medium text-brand">
-           {item.category}
-          </span>
-          <span className="truncate">{item.source}</span>
-          <span className="hidden sm:inline">•</span>
-          <span className="hidden sm:inline">{item.time}</span>
-         </div>
-         <h3 className="text-xs sm:text-sm font-medium leading-5 sm:leading-6 text-text line-clamp-3 sm:line-clamp-none">
-          <NewsLink href={item.url} className="hover:text-brand transition">
-           {item.title}
-          </NewsLink>
-         </h3>
+        <h3 className="text-xs sm:text-sm font-medium leading-5 sm:leading-6 text-text line-clamp-3 sm:line-clamp-none">
+         <NewsLink href={item.url} className="hover:text-brand transition">
+          {item.title}
+         </NewsLink>
+        </h3>
 
-         <div className="mt-2 sm:mt-3 flex items-center gap-2 sm:gap-3">
-          <button
-           onClick={() => setOpenId(open ? null : item.id)}
-           className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-medium text-brand hover:opacity-80 transition"
-          >
-           {open ? t("hideSummary") : t("showSummary")}
-           <Chevron open={open} />
-          </button>
-          <NewsLink href={item.url} className="hidden sm:inline text-xs text-muted hover:text-text transition">
-           {t("readArticle")}
-          </NewsLink>
-         </div>
-
-         {open && (
-          <p className="mt-2 sm:mt-3 text-[11px] sm:text-sm leading-5 sm:leading-7 text-muted">{item.summary}</p>
-         )}
+        <div className="mt-2 sm:mt-3 flex items-center gap-2 sm:gap-3">
+         <button
+          onClick={() => setOpenId(open ? null : item.id)}
+          className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-medium text-brand hover:opacity-80 transition"
+         >
+          {open ? t("hideSummary") : t("showSummary")}
+          <Chevron open={open} />
+         </button>
+         <NewsLink href={item.url} className="hidden sm:inline text-xs text-muted hover:text-text transition">
+          {t("readArticle")}
+         </NewsLink>
         </div>
+
+        {open && (
+         <p className="mt-2 sm:mt-3 text-[11px] sm:text-sm leading-5 sm:leading-7 text-muted">{item.summary}</p>
+        )}
        </div>
       </article>
      );
