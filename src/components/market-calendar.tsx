@@ -121,9 +121,9 @@ export function MarketCalendar() {
            onClick={() => setSelectedDate(active ? null : c.date)}
            className={`min-h-[72px] sm:min-h-[88px] border-r border-b border-border p-1.5 sm:p-2 text-left transition relative ${active ? "bg-brand-soft/60" : "bg-panel hover:bg-panel-elev/60"}`}
           >
-           <div className="flex items-start justify-between gap-1">
-            <span className={`inline-flex h-6 w-6 items-center justify-center text-xs font-num ${isToday ? "bg-brand text-white" : "text-text"}`}>{c.day}</span>
-            {evs.length > 0 && <span className="text-[10px] text-muted font-num">{evs.length}</span>}
+           <div className="relative flex items-center justify-center">
+            <span className={`inline-flex h-7 w-7 items-center justify-center text-xs font-num ${isToday ? "bg-brand text-white" : "text-text"}`}>{c.day}</span>
+            {evs.length > 0 && <span className="absolute right-0 top-0 text-[10px] text-muted font-num">{evs.length}</span>}
            </div>
            <div className="mt-2 flex flex-wrap gap-1">
             {marks.map((m) => <span key={m} className={`h-1.5 w-4 ${DOT[m]}`} title={m} />)}
