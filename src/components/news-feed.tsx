@@ -37,11 +37,11 @@ export function NewsFeed({ items, meta }: { items: NewsItem[]; meta?: { source?:
     </div>
     <span className="text-xs text-muted">{t("newsLatest")}</span>
    </div>
-   <div className="grid grid-cols-2 gap-3 p-3 bg-bg sm:block sm:gap-0 sm:p-0 sm:bg-transparent sm:divide-y sm:divide-border">
+   <div className="grid grid-cols-2 gap-3 p-3 bg-bg sm:block sm:gap-0 sm:p-0 sm:bg-transparent">
     {items.map((item) => {
      const open = openId === item.id;
      return (
-      <article key={item.id} className="border border-border bg-panel surface-transition hover:bg-panel-elev/40 sm:border-0 sm:px-4 sm:py-4">
+      <article key={item.id} className="border border-border bg-panel surface-transition hover:bg-panel-elev/40 sm:border-0 sm:border-b sm:border-border sm:px-4 sm:py-4 sm:last:border-b-0">
        <div className="min-w-0 flex-1 p-3 sm:p-0">
         <div className="mb-2 flex flex-wrap items-center gap-1.5 text-[10px] sm:text-[11px] text-muted">
          <span className="bg-brand-soft px-1.5 py-0.5 text-[10px] font-medium text-brand">
