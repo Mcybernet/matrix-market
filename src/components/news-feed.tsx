@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { NewsItem } from "@/lib/types";
 import { useI18n } from "@/lib/i18n";
 
@@ -14,69 +14,57 @@ function Chevron({ open }: { open: boolean }) {
 }
 
 function NewsLink({ href, className, children }: { href: string; className?: string; children: React.ReactNode }) {
- if (href.startsWith("http")) {
-  return <a href={href} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>;
- }
+ if (href.startsWith("http")) return <a href={href} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>;
  return <Link href={href} className={className}>{children}</Link>;
 }
 
 export function NewsFeed({ items, meta }: { items: NewsItem[]; meta?: { source?: string; fallback?: boolean; updatedAt?: string } }) {
  const [openId, setOpenId] = useState<string | null>(null);
+ const [cat, setCat] = useState<string>("All");
  const { t } = useI18n();
+ const cats = useMemo(() => ["All", ...Array.from(new Set(items.map((i) => i.category)))], [items]);
+ const filtered = useMemo(() => items.filter((i) => cat === "All" || i.category === cat), [items, cat]);
 
  return (
   <div className="border border-border bg-panel card-glow overflow-hidden" data-aos="fade-left" data-aos-duration="650">
-   <div className="flex items-center justify-between border-b border-border px-4 py-4 gap-3">
+   <div className="flex flex-col gap-3 border-b border-border px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
     <div>
      <h2 className="text-sm font-semibold text-text">{t("newsTitle")}</h2>
-     {meta?.source && (
-      <p className="text-[11px] text-muted mt-0.5">
-       {meta.fallback ? "Fallback" : "Live"}: {meta.source}
-      </p>
-     )}
+     {meta?.source && <p className="text-[11px] text-muted mt-0.5">{meta.fallback ? "Fallback" : "Live"}: {meta.source}</p>}
     </div>
-    <span className="text-xs text-muted">{t("newsLatest")}</span>
+    <div className="flex flex-wrap gap-1.5">
+     {cats.map((c) => (
+      <button key={c} onClick={() => setCat(c)} className={`px-2 py-1 text-[11px] border transition ${cat === c ? "bg-brand text-white border-brand" : "bg-panel text-muted border-border hover:text-text"}`}>{c === "All" ? t("all") : c}</button>
+     ))}
+    </div>
    </div>
    <div className="grid grid-cols-2 gap-3 p-3 bg-bg sm:block sm:gap-0 sm:p-0 sm:bg-transparent">
-    {items.map((item) => {
+    {filtered.map((item) => {
      const open = openId === item.id;
      return (
       <article key={item.id} className="border border-border bg-panel surface-transition hover:bg-panel-elev/40 sm:border-0 sm:border-b sm:border-border sm:px-4 sm:py-4 sm:last:border-b-0">
        <div className="min-w-0 flex-1 p-3 sm:p-0">
         <div className="mb-2 flex flex-wrap items-center gap-1.5 text-[10px] sm:text-[11px] text-muted">
-         <span className="bg-brand-soft px-1.5 py-0.5 text-[10px] font-medium text-brand">
-          {item.category}
-         </span>
+         <span className="bg-brand-soft px-1.5 py-0.5 text-[10px] font-medium text-brand">{item.category}</span>
          <span className="truncate">{item.source}</span>
          <span className="hidden sm:inline">•</span>
          <span className="hidden sm:inline">{item.time}</span>
         </div>
         <h3 className="text-xs sm:text-sm font-medium leading-5 sm:leading-6 text-text line-clamp-3 sm:line-clamp-none">
-         <NewsLink href={item.url} className="hover:text-brand transition">
-          {item.title}
-         </NewsLink>
+         <NewsLink href={item.url} className="hover:text-brand transition">{item.title}</NewsLink>
         </h3>
-
         <div className="mt-2 sm:mt-3 flex items-center gap-2 sm:gap-3">
-         <button
-          onClick={() => setOpenId(open ? null : item.id)}
-          className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-medium text-brand hover:opacity-80 transition"
-         >
-          {open ? t("hideSummary") : t("showSummary")}
-          <Chevron open={open} />
+         <button onClick={() => setOpenId(open ? null : item.id)} className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-medium text-brand hover:opacity-80 transition">
+          {open ? t("hideSummary") : t("showSummary")} <Chevron open={open} />
          </button>
-         <NewsLink href={item.url} className="hidden sm:inline text-xs text-muted hover:text-text transition">
-          {t("readArticle")}
-         </NewsLink>
+         <NewsLink href={item.url} className="hidden sm:inline text-xs text-muted hover:text-text transition">{t("readArticle")}</NewsLink>
         </div>
-
-        {open && (
-         <p className="mt-2 sm:mt-3 text-[11px] sm:text-sm leading-5 sm:leading-7 text-muted">{item.summary}</p>
-        )}
+        {open && <p className="mt-2 sm:mt-3 text-[11px] sm:text-sm leading-5 sm:leading-7 text-muted">{item.summary}</p>}
        </div>
       </article>
      );
     })}
+    {filtered.length === 0 && <div className="col-span-2 p-6 text-sm text-muted text-center">No news in this category.</div>}
    </div>
   </div>
  );

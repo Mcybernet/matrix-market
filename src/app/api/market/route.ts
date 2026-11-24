@@ -22,10 +22,21 @@ const ASSET_DEFS: RawAsset[] = [
  { symbol: "ETH/USD", name: "Ethereum", category: "Crypto", currency: "USD", marketStatus: "24/7" },
 ];
 
-async function fetchFrankfurterChange(base: string, quote: string) {
+function rangeDays(range: string) {
+ if (range === "7d") return 7;
+ if (range === "3m") return 90;
+ return 30;
+}
+function yahooRange(range: string) {
+ if (range === "7d") return "7d";
+ if (range === "3m") return "3mo";
+ return "1mo";
+}
+
+async function fetchFrankfurterChange(base: string, quote: string, range = "1m") {
  const end = new Date();
  const start = new Date();
- start.setDate(end.getDate() - 14);
+ start.setDate(end.getDate() - rangeDays(range));
  const fmt = (d: Date) => d.toISOString().slice(0, 10);
  const url = `https://api.frankfurter.dev/v1/${fmt(start)}..${fmt(end)}?base=${base}&symbols=${quote}`;
  const res = await fetch(url, { next: { revalidate: 300 } });
@@ -43,12 +54,12 @@ async function fetchFrankfurterChange(base: string, quote: string) {
  const prevClose = prev.rate;
  const change = price - prevClose;
  const changePercent = prevClose ? (change / prevClose) * 100 : 0;
- const sparkline = rows.slice(-10).map((r) => r.rate);
+ const sparkline = rows.map((r) => r.rate);
  return { price, prevClose, change, changePercent, date: last.date, sparkline };
 }
 
-async function fetchYahoo(symbol: string) {
- const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=1mo`;
+async function fetchYahoo(symbol: string, range = "1m") {
+ const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=${yahooRange(range)}`;
  const res = await fetch(url, {
   next: { revalidate: 300 },
   headers: { "User-Agent": "Mozilla/5.0" },
@@ -64,7 +75,7 @@ async function fetchYahoo(symbol: string) {
  const prevClose = Number(meta.chartPreviousClose ?? meta.previousClose ?? closes[closes.length - 2] ?? price);
  const change = price - prevClose;
  const changePercent = prevClose ? (change / prevClose) * 100 : 0;
- const sparkline = closes.slice(-10);
+ const sparkline = closes;
  return {
   price,
   prevClose,
@@ -98,7 +109,11 @@ function toAsset(def: RawAsset, values: Partial<Asset> & Pick<Asset, "price" | "
  };
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+ const { searchParams } = new URL(request.url);
+ const range = ["7d", "1m", "3m"].includes(searchParams.get("range") || "") ? (searchParams.get("range") as string) : "1m";
+ const symbolFilter = searchParams.get("symbol");
+ const defs = symbolFilter ? ASSET_DEFS.filter((d) => d.symbol === symbolFilter) : ASSET_DEFS;
  const updatedAt = new Date().toISOString();
  const sourceStats: Record<string, { ok: number; err: number }> = {
   Frankfurter: { ok: 0, err: 0 },
@@ -106,7 +121,7 @@ export async function GET() {
  };
 
  const results = await Promise.allSettled(
-  ASSET_DEFS.map(async (def) => {
+  defs.map(async (def) => {
    const fxMap: Record<string, [string, string]> = {
     "XAU/USD": ["XAU", "USD"],
     "XAG/USD": ["XAG", "USD"],
@@ -117,13 +132,13 @@ export async function GET() {
    };
    if (fxMap[def.symbol]) {
     const [base, quote] = fxMap[def.symbol];
-    const v = await fetchFrankfurterChange(base, quote);
+    const v = await fetchFrankfurterChange(base, quote, range);
     sourceStats.Frankfurter.ok++;
     return toAsset(def, { ...v, updatedAt });
    }
    const yahooMap: Record<string, string> = { WTI: "CL=F", IHSG: "^JKSE", SPX: "^GSPC" };
    if (yahooMap[def.symbol]) {
-    const v = await fetchYahoo(yahooMap[def.symbol]);
+    const v = await fetchYahoo(yahooMap[def.symbol], range);
     sourceStats["Yahoo Finance"].ok++;
     return toAsset(def, { ...v, updatedAt });
    }
@@ -136,7 +151,7 @@ export async function GET() {
  results.forEach((r, i) => {
   if (r.status === "fulfilled") assets.push(r.value);
   else {
-   const def = ASSET_DEFS[i];
+   const def = defs[i];
    const isYahoo = ["WTI", "IHSG", "SPX"].includes(def.symbol);
    if (isYahoo) sourceStats["Yahoo Finance"].err++;
    else sourceStats.Frankfurter.err++;
