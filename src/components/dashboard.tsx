@@ -99,8 +99,8 @@ export function Dashboard() {
   });
  }, [assets, query, category, watchlist]);
 
- const gainers = useMemo(() => [...assets].sort((a, b) => b.changePercent - a.changePercent).slice(0, 3), [assets]);
- const losers = useMemo(() => [...assets].sort((a, b) => a.changePercent - b.changePercent).slice(0, 3), [assets]);
+ const gainers = useMemo(() => [...assets].filter((a) => a.changePercent > 0).sort((a, b) => b.changePercent - a.changePercent).slice(0, 3), [assets]);
+ const losers = useMemo(() => [...assets].filter((a) => a.changePercent < 0).sort((a, b) => a.changePercent - b.changePercent).slice(0, 3), [assets]);
  const compareAssets = useMemo(() => compare.map((s) => assets.find((a) => a.symbol === s)).filter(Boolean) as Asset[], [compare, assets]);
 
  function toggleWatch(symbol: string) {
@@ -205,11 +205,15 @@ export function Dashboard() {
     <section className="grid gap-4 md:grid-cols-2" data-aos="fade-up">
      <div className="border border-border bg-panel p-4">
       <h3 className="text-sm font-semibold text-text mb-3">Top Gainers</h3>
-      <div className="space-y-2">{gainers.map((a) => <div key={a.symbol} className="flex items-center justify-between text-sm border-b border-border pb-2 last:border-0 last:pb-0"><span className="text-text font-mono">{a.symbol}</span><span className={`font-num ${a.changePercent >= 0 ? "text-up" : "text-down"}`}>{a.changePercent > 0 ? "+" : ""}{a.changePercent.toFixed(2)}%</span></div>)}</div>
+      <div className="space-y-2">
+       {gainers.length === 0 ? <div className="text-sm text-muted">Tidak ada aset naik saat ini.</div> : gainers.map((a) => <div key={a.symbol} className="flex items-center justify-between text-sm border-b border-border pb-2 last:border-0 last:pb-0"><span className="text-text font-mono">{a.symbol}</span><span className="font-num text-up">+{a.changePercent.toFixed(2)}%</span></div>)}
+      </div>
      </div>
      <div className="border border-border bg-panel p-4">
       <h3 className="text-sm font-semibold text-text mb-3">Top Losers</h3>
-      <div className="space-y-2">{losers.map((a) => <div key={a.symbol} className="flex items-center justify-between text-sm border-b border-border pb-2 last:border-0 last:pb-0"><span className="text-text font-mono">{a.symbol}</span><span className={`font-num ${a.changePercent >= 0 ? "text-up" : "text-down"}`}>{a.changePercent > 0 ? "+" : ""}{a.changePercent.toFixed(2)}%</span></div>)}</div>
+      <div className="space-y-2">
+       {losers.length === 0 ? <div className="text-sm text-muted">Tidak ada aset turun saat ini.</div> : losers.map((a) => <div key={a.symbol} className="flex items-center justify-between text-sm border-b border-border pb-2 last:border-0 last:pb-0"><span className="text-text font-mono">{a.symbol}</span><span className="font-num text-down">{a.changePercent.toFixed(2)}%</span></div>)}
+      </div>
      </div>
     </section>
 
