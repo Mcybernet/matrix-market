@@ -38,53 +38,44 @@ export function NewsFeed({ items, meta }: { items: NewsItem[]; meta?: { source?:
     </div>
     <span className="text-xs text-muted">{t("newsLatest")}</span>
    </div>
-   <div className="divide-y divide-border">
+   <div className="grid grid-cols-2 gap-px bg-border">
     {items.map((item) => {
      const open = openId === item.id;
      return (
-      <article key={item.id} className="px-4 py-4 surface-transition hover:bg-panel-elev/40">
-       <div className="flex gap-3 sm:gap-4">
-        <div className="relative h-20 w-28 sm:h-24 sm:w-36 shrink-0 overflow-hidden border border-border bg-bg">
-         <Image
-          src={item.image}
-          alt={item.title}
-          fill
-          className="object-cover transition duration-300 hover:scale-105"
-          sizes="(max-width: 640px) 112px, 144px"
-         />
+      <article key={item.id} className="bg-panel surface-transition hover:bg-panel-elev/40 flex flex-col">
+       <div className="relative h-28 sm:h-40 w-full overflow-hidden border-b border-border bg-bg">
+        <Image
+         src={item.image}
+         alt={item.title}
+         fill
+         className="object-cover transition duration-300 hover:scale-105"
+         sizes="(max-width: 640px) 50vw, 33vw"
+        />
+       </div>
+       <div className="p-3 sm:p-4 flex flex-col flex-1 min-w-0">
+        <div className="mb-2 flex flex-wrap items-center gap-1.5 text-[10px] sm:text-[11px] text-muted">
+         <span className="bg-brand-soft px-1.5 py-0.5 text-[10px] font-medium text-brand">
+          {item.category}
+         </span>
+         <span className="truncate">{item.source}</span>
         </div>
-        <div className="min-w-0 flex-1">
-         <div className="mb-2 flex flex-wrap items-center gap-2 text-[11px] text-muted">
-          <span className="bg-brand-soft px-2 py-0.5 text-[10px] font-medium text-brand">
-           {item.category}
-          </span>
-          <span>{item.source}</span>
-          <span>•</span>
-          <span>{item.time}</span>
-         </div>
-         <h3 className="text-sm font-medium leading-6 text-text">
-          <NewsLink href={item.url} className="hover:text-brand transition">
-           {item.title}
-          </NewsLink>
-         </h3>
-
-         <div className="mt-3 flex items-center gap-3">
-          <button
-           onClick={() => setOpenId(open ? null : item.id)}
-           className="inline-flex items-center gap-1 text-xs font-medium text-brand hover:opacity-80 transition"
-          >
-           {open ? t("hideSummary") : t("showSummary")}
-           <Chevron open={open} />
-          </button>
-          <NewsLink href={item.url} className="text-xs text-muted hover:text-text transition">
-           {t("readArticle")}
-          </NewsLink>
-         </div>
-
-         {open && (
-          <p className="mt-3 text-sm leading-7 text-muted">{item.summary}</p>
-         )}
+        <h3 className="text-xs sm:text-sm font-medium leading-5 sm:leading-6 text-text line-clamp-3">
+         <NewsLink href={item.url} className="hover:text-brand transition">
+          {item.title}
+         </NewsLink>
+        </h3>
+        <div className="mt-auto pt-3 flex items-center gap-2">
+         <button
+          onClick={() => setOpenId(open ? null : item.id)}
+          className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-medium text-brand hover:opacity-80 transition"
+         >
+          {open ? t("hideSummary") : t("showSummary")}
+          <Chevron open={open} />
+         </button>
         </div>
+        {open && (
+         <p className="mt-2 text-[11px] sm:text-sm leading-5 sm:leading-7 text-muted">{item.summary}</p>
+        )}
        </div>
       </article>
      );
