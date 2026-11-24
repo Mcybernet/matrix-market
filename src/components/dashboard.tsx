@@ -205,11 +205,11 @@ export function Dashboard() {
     <section className="grid gap-4 md:grid-cols-2" data-aos="fade-up">
      <div className="border border-border bg-panel p-4">
       <h3 className="text-sm font-semibold text-text mb-3">Top Gainers</h3>
-      <div className="space-y-2">{gainers.map((a) => <div key={a.symbol} className="flex items-center justify-between text-sm border-b border-border pb-2 last:border-0 last:pb-0"><span className="text-text font-mono">{a.symbol}</span><span className="font-num text-up">+{a.changePercent.toFixed(2)}%</span></div>)}</div>
+      <div className="space-y-2">{gainers.map((a) => <div key={a.symbol} className="flex items-center justify-between text-sm border-b border-border pb-2 last:border-0 last:pb-0"><span className="text-text font-mono">{a.symbol}</span><span className={`font-num ${a.changePercent >= 0 ? "text-up" : "text-down"}`}>{a.changePercent > 0 ? "+" : ""}{a.changePercent.toFixed(2)}%</span></div>)}</div>
      </div>
      <div className="border border-border bg-panel p-4">
       <h3 className="text-sm font-semibold text-text mb-3">Top Losers</h3>
-      <div className="space-y-2">{losers.map((a) => <div key={a.symbol} className="flex items-center justify-between text-sm border-b border-border pb-2 last:border-0 last:pb-0"><span className="text-text font-mono">{a.symbol}</span><span className="font-num text-down">{a.changePercent.toFixed(2)}%</span></div>)}</div>
+      <div className="space-y-2">{losers.map((a) => <div key={a.symbol} className="flex items-center justify-between text-sm border-b border-border pb-2 last:border-0 last:pb-0"><span className="text-text font-mono">{a.symbol}</span><span className={`font-num ${a.changePercent >= 0 ? "text-up" : "text-down"}`}>{a.changePercent > 0 ? "+" : ""}{a.changePercent.toFixed(2)}%</span></div>)}</div>
      </div>
     </section>
 
@@ -232,7 +232,7 @@ export function Dashboard() {
         <tbody>
          {[
           ["Price", (a: Asset) => a.price.toLocaleString("en-US", { maximumFractionDigits: 4 })],
-          ["Change %", (a: Asset) => `${a.changePercent.toFixed(2)}%`],
+          ["Change %", (a: Asset) => `${a.changePercent > 0 ? "+" : ""}${a.changePercent.toFixed(2)}%`],
           ["Open", (a: Asset) => a.open.toLocaleString("en-US", { maximumFractionDigits: 4 })],
           ["High", (a: Asset) => a.high.toLocaleString("en-US", { maximumFractionDigits: 4 })],
           ["Low", (a: Asset) => a.low.toLocaleString("en-US", { maximumFractionDigits: 4 })],
