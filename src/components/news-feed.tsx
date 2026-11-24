@@ -38,7 +38,7 @@ export function NewsFeed({ items, meta }: { items: NewsItem[]; meta?: { source?:
     </div>
     <span className="text-xs text-muted">{t("newsLatest")}</span>
    </div>
-   <div className="grid grid-cols-2 gap-3 p-3 sm:block sm:gap-0 sm:p-0 sm:divide-y sm:divide-border">
+   <div className="grid grid-cols-2 gap-3 p-3 bg-bg sm:block sm:gap-0 sm:p-0 sm:bg-transparent sm:divide-y sm:divide-border">
     {items.map((item) => {
      const open = openId === item.id;
      return (
